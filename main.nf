@@ -9,7 +9,7 @@ process MULTIQC {
     publishDir "${params.outdir}", mode: 'copy'
 
     input:
-    path input_dir
+    val input_dir
 
     output:
     path "multiqc_report.html"
@@ -32,9 +32,5 @@ process MULTIQC {
 }
 
 workflow {
-    Channel
-        .fromPath(params.input, checkIfExists: true)
-        .set { input_ch }
-
-    MULTIQC(input_ch)
+    MULTIQC(params.input)
 }
