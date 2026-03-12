@@ -1,6 +1,12 @@
+nextflow.enable.dsl=2
+
+params.input  = null
+params.outdir = null
+
 process MULTIQC {
 
     container "ewels/multiqc:latest"
+    publishDir "${params.outdir}", mode: 'copy'
 
     input:
     val input_dir
@@ -17,7 +23,11 @@ process MULTIQC {
       --ignore "*.cram" \
       --ignore "*.vcf" \
       --ignore "*.vcf.gz" \
-      --ignore "*.fastq"
+      --ignore "*.g.vcf" \
+      --ignore "*.bcf" \
+      --ignore "*.fastq" \
+      --ignore "*.fq" \
+      --force
     """
 }
 
